@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <link href="css/animate.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/sitestyle.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            document.body.style.backgroundSize = screen.width + "px", screen.height + "px";
+            if (localStorage.getItem("token") != null && localStorage.getItem("token") != "")
+                window.location.href = "chat.html";
+
+            $("#sub").click(function () {
+                var nowdate = new Date();
+                var jsondatas =
+                         {
+                             "username": $("#usernmae").val(),
+                             "password": $("#pass").val(),
+                             "emailid": $("#ema").val(),
+                             "regdate": nowdate,
+                             "isadmin": "0",
+                             "token": "",
+                             "status": "1",
+                         }
+                $.ajax({
+                    type: "POST",
+                    url: "http://charapi.azurewebsites.net/api/chatuser",
+                    data: jsondatas,
+                    dataType: "json",
+                    async: true,
+                    success: function (data) {
+                        alert(data.token);
+                        localStorage.setItem("token", data.token);
+                        localStorage.setItem("isadmin", data.isadmin);
+                        localStorage.setItem("status", data.status);
+                        localStorage.setItem("emailid", data.emailid);
+                        localStorage.setItem("username", data.username);
+                        alert("success");
+                        window.location.href = "chat.html";
+                    },
+                    error: function (result) {
+                        alert("fail");
+                    }
+                });
+            });
+			
+            $("#back").click(function () {
+                window.history.back();
+            });
+			
+			$("#site").click(function () {
+                window.location.href = "index.html";
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <div class="container">
+        <!--<div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: rgb(95, 134, 107); box-shadow: 0px 3px 10px 0px #2E0F4B; padding: 15px 20px 15px 20px; ">
+                <input type="button" value="back" id="back" />
+            </div>
+        </div>-->
+		
+		<div class="row">
+	<input  style="float:right" type="button" value="Back to the site" id="site" class="sitesignupbutton col-lg-2  col-md-2 col-sm-6 col-xs-6" />
+	</div>
+		
+        <div class="row">
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="margin:80px auto 0px auto;">
+                <div class="loginback"></div>
+                <div style="display: block; position: relative; background-color: red; width: 90%; margin: 20px auto; ">
+                    <input type="text" id="usernmae" placeholder="username" class="textbox" />
+                </div>
+                <div style="display: block; position: relative; background-color: red; width: 90%; margin: 20px auto; ">
+                    <input type="password" id="pass" placeholder="password" class="textbox" />
+                </div>
+                <div style="display: block; position: relative; background-color: red; width: 90%; margin: 20px auto; ">
+                    <input type="text" id="ema" placeholder="emailid" class="textbox" />
+                </div>
+                <div style="display:block; position: relative; width:60%; margin:0px auto;">
+                    <input type="button" value="signup" id="sub" class="siterebutton" />
+                    <!--<input type="button" value="signup" id="reg" class="sitebutton" style="position:absolute; top:0px; right:0px;" />-->
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+        </div>
+    </div>
+</body>
+</html>

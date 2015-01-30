@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>James Property</title>
+
+    <!-- Bootstrap Core CSS -->
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+	<link href="css/bootstrap.css" rel="stylesheet">
+	
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+	
+	<style>
+	@media all and (min-width: 960px) {
+    body{
+        font-size: 12px;
+    }
+	h3{
+    font-size: 2.5em;
+}
+ #news {
+             width: 400px;
+             height: 300px;
+            <!--  margin-top: -15px; -->
+         }
+}
+ 
+@media all and (max-width: 959px) and (min-width: 600px) {
+    body{
+        font-size: 12px;
+    }
+	h3{
+    font-size: 2.3em;
+	margin-top: -65px;
+}
+
+#news {
+             width: 300px;
+             height: 200px;
+            <!--  margin-top: -15px; -->
+         }
+}
+ 
+@media all and (max-width: 599px) and (min-width: 320px) {
+    body{
+        font-size: 11px;
+		
+    }
+	h3{
+    font-size: 1.7em;
+	margin-top: 8px;
+	text-align:center;
+}
+p{
+ margin-top:8px;
+padding:10px;
+}
+
+ #news {
+             width: 310px;
+             height: 180px
+			 padding:2px;
+            <!--  margin-top: -15px; -->
+         }
+		 
+		
+}
+	</style>
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                     <a href="index.html">
+                       Logo
+                    </a>
+                </li>
+                <li><a href="Courses.html" style="font-size:1.3em;">Courses</a></li>
+               
+			   <li><a href="news.html" style="font-size:1.3em;">News</a></li>
+			   
+                <li><a href="mail.html" style="font-size:1.3em;">Mailing</a></li>
+				
+                <li><a href="contact.html" style="font-size:1.3em;">Contact Us</a></li>
+                
+				<!-- <li><a href="#">About</a></li>
+
+				<li><a href="#">Services</a></li> -->
+				
+               
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+<!--             <div class="container-fluid"> -->
+                <div class="row">
+                    <div class="col-lg-12"  style="background-color:#52C34F;margin-top: -20px;margin-left:-5px;">
+					 
+                      <table width="100%">
+							<tr>
+								<td style="width:25%;"><a href="#menu-toggle" class="btn btn-default" id="menu-toggle" style="margin-top: 5px;margin-left:0px;">Menu</a></td>
+								<td style="width:75%;background-color:#52C34F;color:white;font-size:2em;text-align:center">News</td>
+							</tr>
+						</table>
+                   
+                    </div>
+							
+					
+					
+					  <!--Recent News-->
+					<div class="col-sm-12" style="">
+						<h3>News</h3>
+					</div>
+					<div class="col-sm-12" style="" id="news_image">
+					    <!-- <a href="" style="margin-left:15px;">Read More..</a> -->
+					</div>
+					<div class="col-sm-12" style="" id="news_content">
+						
+					
+					</div>	
+					
+					<br><br>
+					
+					<a href="chatlogin.html" style="margin-left:220px;"><button type="button" class="btn btn-danger">Chat Now</button></a>
+					<br><br>
+					
+					
+					 <!--footer works-->
+					<div class="col-sm-12" style="background-color:#52C34F;margin-left:0px;margin-bottom: -20px;width:101%">
+						<br><br><br><br><br><br>
+					</div>	
+					
+					
+					
+				</div>
+          <!--   </div> -->
+        </div>
+        <!-- /#page-content-wrapper -->
+
+		
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+	
+	<script>
+	
+	$(document).ready(function(){
+	
+	
+			var url = window.location.href;
+            var param = url.split("?");
+            var nid = param[1];
+			
+			singleNews(nid);
+	
+	
+	//alert(nid);
+	});
+	
+	</script>
+	
+	<script>
+	
+	function singleNews(nid)
+	{
+		$.ajax({
+                    type: "GET",
+                    url: "http://api.gamesinindia.in/api/news?nid="+nid,
+                    data: {},
+                    dataType: "json",
+					async:false,
+                    success: function (data) {
+
+                        $("#news_image").empty();
+						$("#news_content").empty();
+						
+
+                        
+						$("#news_image").append('<img src="'+data.news_image+'" id="news">');
+						$("#news_content").append('<p style="text-align:justify">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '+data.news_content+'</p>');
+						
+						
+                    },
+                    error: function (result) {
+                       // alert("Error......");
+                    }
+                });
+	
+	
+	}
+	</script>
+
+</body>
+
+</html>
